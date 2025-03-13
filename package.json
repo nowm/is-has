@@ -1,13 +1,49 @@
 {
   "name": "is-has",
+  "version": "1.0.0",
+  "author": {
+    "name": "nowm",
+    "url": "https://github.com/nowm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nowm/is-has.git"
+  },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@stylistic/eslint-plugin-js": "^4.2.0",
-    "@types/bun": "latest",
+    "@types/bun": "^1.2.5",
+    "@types/node": "^22.13.10",
+    "bun-types": "^1.2.5",
+    "globals": "^16.0.0",
     "typescript-eslint": "^8.26.1"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
-  "version": "1.0.0"
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
+  "bugs": {
+    "url": "https://github.com/nowm/is-has/issues"
+  },
+  "description": "Set of checking functions. No deps! Never throws errors!",
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/nowm/is-has",
+  "keywords": [
+    "check",
+    "is-has",
+    "variables"
+  ],
+  "license": "Apache-2.0",
+  "scripts": {
+    "make": "bun run run/make.ts",
+    "publish": "cd dist && bun publish"
+  },
+  "type": "module",
+  "types": "./types/index.d.ts"
 }
