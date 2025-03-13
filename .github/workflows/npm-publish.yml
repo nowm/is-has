@@ -9,12 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
       - uses: oven-sh/setup-bun@v2
         with:
+          node-version: 20
           bun-version: latest
           registry-url: https://registry.npmjs.org/
       - run: bun install
       - run: bun run make
-      - run: bun run publish:npm
+      - run: cd dist && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.is_has_token}}
