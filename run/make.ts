@@ -145,7 +145,7 @@ async function buildReadme() {
 
   const glob = new Glob('*.md');
   for (const filename of glob.scanSync('./doc')) {
-    result += '## ' + parse(filename).name + '\n\n';
+    result += '### ' + parse(filename).name + '\n\n';
 
     result += await Bun.file(`./doc/${filename}`).text();
   }
