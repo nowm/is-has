@@ -42,7 +42,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "make": "bun run run/make.ts",
-    "deploy": "cd dist && bun publish"
+    "publish:npm": "cd dist && bun publish"
   },
   "type": "module",
   "types": "./types/index.d.ts"
