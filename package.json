@@ -42,7 +42,8 @@
   "license": "Apache-2.0",
   "scripts": {
     "make": "bun run run/make.ts",
-    "publish:npm": "cd dist && bun publish"
+    "publish:npm": "cd dist && bun publish",
+    "postversion": "git push origin \"$(git tag --points-at HEAD)\""
   },
   "type": "module",
   "types": "./types/index.d.ts"
