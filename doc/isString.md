@@ -1,5 +1,5 @@
 ```typescript
-declare function isString(variable?: unknown): variable is string;
+export declare function isString(variable?: unknown): variable is string;
 ```
 
 Checks if `variable` is a string.

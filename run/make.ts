@@ -113,7 +113,7 @@ async function buildTypes() {
           continue;
         }
 
-        definitionLines.push('export ' + line);
+        definitionLines.push(line);
 
         continue;
       }
@@ -147,7 +147,30 @@ async function buildReadme() {
   for (const filename of glob.scanSync('./doc')) {
     result += '### ' + parse(filename).name + '\n\n';
 
-    result += await Bun.file(`./doc/${filename}`).text();
+    const content = await Bun.file(`./doc/${filename}`).text();
+
+    let inDefinition = content.indexOf('```typescript') === 0;
+
+    result += content.split('\n').map((line) => {
+      if (!inDefinition) {
+        return line;
+      }
+
+      if (line === '```typescript') {
+        return line;
+      }
+
+      if (line === '```') {
+        inDefinition = false;
+        return line;
+      }
+
+      if (line.indexOf('export declare function') === 0) {
+        return line.substring(7);
+      }
+
+      return line;
+    }).join('\n');
   }
 
   result += '\n';
