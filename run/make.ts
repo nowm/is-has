@@ -141,7 +141,7 @@ async function buildTypes() {
 }
 
 async function buildReadme() {
-  let result = await Bun.file('./README.md').text() + '\n\n';
+  let result = await Bun.file('./readme-intro.md').text() + '\n\n';
 
   const glob = new Glob('*.md');
   for (const filename of glob.scanSync('./doc')) {
@@ -175,6 +175,7 @@ async function buildReadme() {
 
   result += '\n';
 
+  await Bun.write('./README.md', result);
   await Bun.write('./dist/README.md', result);
 }
 
