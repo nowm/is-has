@@ -2,4 +2,5 @@
  * Copyright 2025 nowm
  */
 
-export * from './simple';
+export * from './is';
+export * from './has';

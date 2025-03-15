@@ -138,6 +138,7 @@ async function buildTypes() {
 
   result = result.trimEnd() + '\n';
 
+  await Bun.write('./src/index.d.ts', result);
   await Bun.write('./dist/index.d.ts', result);
 }
 
@@ -145,7 +146,7 @@ async function buildReadme() {
   let result = (await Bun.file('./readme-intro.md').text()).trimEnd() + '\n\n';
 
   const glob = new Glob('*.md');
-  for (const filename of glob.scanSync('./doc')) {
+  for (const filename of Array.from(glob.scanSync('./doc')).toSorted()) {
     result += '### ' + parse(filename).name + '\n\n';
 
     const content = (await Bun.file(`./doc/${filename}`).text()).trimEnd();
@@ -154,7 +155,10 @@ async function buildReadme() {
 
     result += content.split('\n').map((line) => {
       if (inDefinition) {
-        if (line.indexOf('export declare function') === 0) {
+        if (
+          line.indexOf('export declare function') === 0
+          || line.indexOf('export type') === 0
+        ) {
           return line.substring(7);
         }
 

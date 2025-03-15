@@ -47,5 +47,5 @@
     "postversion": "git push && git push origin tag \"$(git tag --points-at HEAD)\""
   },
   "type": "module",
-  "types": "./dist/index.d.ts"
+  "types": "./src/index.d.ts"
 }
