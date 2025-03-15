@@ -45,7 +45,7 @@ if (year !== currentYear) {
 }
 
 const licenseInfo = `/*
- * is-has, v${packageInfo.version}
+ * is-has
  *
  * Copyright ${year} nowm
  */
@@ -145,15 +145,25 @@ async function buildTypes() {
 async function buildReadme() {
   let result = (await Bun.file('./readme-intro.md').text()).trimEnd() + '\n\n';
 
+  const links: {name: string, href: string}[] = [];
+
+  let functions = '';
+
   const glob = new Glob('*.md');
   for (const filename of Array.from(glob.scanSync('./doc')).toSorted()) {
-    result += '### ' + parse(filename).name + '\n\n';
+    const parsedName = parse(filename).name;
+
+    functions += '### ' + parsedName + '\n\n';
+    links.push({
+      name: parsedName,
+      href: '#' + parsedName.toLowerCase().split(' ').join('-'),
+    });
 
     const content = (await Bun.file(`./doc/${filename}`).text()).trimEnd();
 
     let inDefinition = content.indexOf('```typescript') === 0;
 
-    result += content.split('\n').map((line) => {
+    functions += content.split('\n').map((line) => {
       if (inDefinition) {
         if (
           line.indexOf('export declare function') === 0
@@ -171,7 +181,11 @@ async function buildReadme() {
     }).join('\n').trimEnd() + '\n\n';
   }
 
-  result = result.trimEnd() + '\n';
+  if (links.length) {
+    result += links.map(({name, href}) => `* [${name}](${href})`).join('\n') + '\n\n';
+  }
+
+  result += functions.trimEnd() + '\n';
 
   await Bun.write('./README.md', result);
   await Bun.write('./dist/README.md', result);

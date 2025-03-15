@@ -1,5 +1,5 @@
 /*
- * is-has, v1.2.0
+ * is-has
  *
  * Copyright 2025 nowm
  */
@@ -64,23 +64,14 @@ export declare function isString(variable?: unknown): variable is string;
  *   }
  * }
  * 
- * const classInstance = new Class1();
- * 
- * const obj = {
- *   propA: 'propA',
- *   get propB() {
- *     return 'propB';
- *   },
- * };
- * 
- * const arr = [1, '2', 3, 'aaa'];
- * 
  * hasOwnProperty(Class1, 'propA');     // false
  * hasOwnProperty(Class1, 'propB');     // true
  * hasOwnProperty(Class1, 'propC');     // false
  * hasOwnProperty(Class1, 'propD');     // true
  * hasOwnProperty(Class1, 'functionA'); // false
  * hasOwnProperty(Class1, 'functionB'); // true
+ * 
+ * const classInstance = new Class1();
  * 
  * hasOwnProperty(classInstance, 'propA');     // true
  * hasOwnProperty(classInstance, 'propB');     // false
@@ -89,10 +80,19 @@ export declare function isString(variable?: unknown): variable is string;
  * hasOwnProperty(classInstance, 'functionA'); // false
  * hasOwnProperty(classInstance, 'functionB'); // false
  * 
+ * const obj = {
+ *   propA: 'propA',
+ *   get propB() {
+ *     return 'propB';
+ *   },
+ * };
+ * 
  * hasOwnProperty(obj, 'propA'); // true
  * hasOwnProperty(obj, 'propB'); // true
  * hasOwnProperty(obj, 'propC'); // false
  * hasOwnProperty(obj, null);    // false
+ * 
+ * const arr = [1, '2', 3, 'aaa'];
  * 
  * hasOwnProperty(arr, 0);         // true
  * hasOwnProperty(arr, 4);         // false
