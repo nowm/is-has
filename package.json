@@ -41,6 +41,7 @@
   ],
   "license": "Apache-2.0",
   "scripts": {
+    "lint": "bunx eslint . --ignore-pattern 'dist/*'",
     "make": "bun run run/make.ts",
     "publish:npm": "cd dist && bun publish",
     "postversion": "git push && git push origin tag \"$(git tag --points-at HEAD)\""
