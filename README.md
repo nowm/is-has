@@ -12,7 +12,6 @@ npm i is-has
 
 ## Functions
 
-
 ### isString
 
 ```typescript
@@ -27,4 +26,3 @@ import {isString} from 'is-has';
 isString(123); // false
 isString('Hello!'); // true
 ```
-
