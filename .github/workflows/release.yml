@@ -9,17 +9,8 @@ permissions:
   contents: write
 
 jobs:
-  logs:
-    name: Debug
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Debug info"
-      - run: echo "${{toJSON(github)}}"
-      - run: exit 1
   release:
     name: Release pushed tag
-    needs: logs
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Create release
