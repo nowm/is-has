@@ -2,7 +2,7 @@
 export declare function isNumber(variable?: unknown): variable is number;
 ```
 
-Checks if a variable is a number. 
+`isNumber` checks if a variable is a number. 
 
 - Both `Infinity` and `NaN` are treated as non-numbers.
 - `BigInt` is a separate story in JS, so it's not treated as a number as well.
