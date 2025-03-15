@@ -1,6 +1,6 @@
 # is-has
 
-[![Publish to NPM](https://github.com/nowm/is-has/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/nowm/is-has/actions/workflows/npm-publish.yml)
+[![Release](https://github.com/nowm/is-has/actions/workflows/release.yml/badge.svg)](https://github.com/nowm/is-has/actions/workflows/release.yml)
 
 Set of checking functions. No deps! Never throws errors!
 
