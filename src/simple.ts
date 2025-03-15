@@ -9,3 +9,11 @@ export function isString(variable?: unknown): variable is string {
     return false;
   }
 }
+
+export function isNumber(variable?: unknown): variable is number {
+  try {
+    return Number.isFinite(variable);
+  } catch (e) {
+    return false;
+  }
+}
