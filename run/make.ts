@@ -2,7 +2,7 @@
  * Copyright 2025 nowm
  */
 
-import {type BuildConfig, Glob} from 'bun';
+import {type BuildConfig, Glob, type PathLike} from 'bun';
 import packageInfo from '../package.json';
 import * as process from 'node:process';
 import {rm} from 'node:fs/promises';
@@ -14,9 +14,9 @@ const defaultBuildConfig: BuildConfig = {
   minify: process.env.NODE_ENV !== 'development',
 };
 
-type PackageJson = Partial<typeof packageInfo & {
+type PackageJson = Partial<Omit<typeof packageInfo, 'type' | 'types'> & {
   type: 'module' | 'commonjs';
-  types: string;
+  types: PathLike;
 }>;
 
 const distInfo: PackageJson = {
