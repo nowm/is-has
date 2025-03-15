@@ -45,6 +45,8 @@ if (year !== currentYear) {
 }
 
 const licenseInfo = `/*
+ * is-has, v${packageInfo.version}
+ *
  * Copyright ${year} nowm
  */
 `;
@@ -91,7 +93,7 @@ async function buildTypes() {
     const docLines = [];
 
     for (let index = 0; index < lines.length; index++) {
-      const line = lines[index];
+      const line = lines[index].trimEnd();
 
       if (inDefinition) {
         if (line === '```typescript') {
@@ -118,7 +120,7 @@ async function buildTypes() {
         continue;
       }
 
-      docLines.push('  *' + line);
+      docLines.push(line);
     }
 
     if (!definitionLines.length) {
@@ -127,51 +129,45 @@ async function buildTypes() {
 
     if (docLines.length) {
       result += '/**\n';
-      result += docLines.join('\n');
-      result += ' */\n';
+      result += docLines.join('\n').trimEnd().split('\n').map((line) => ' * ' + line).join('\n');
+      result += '\n */\n';
     }
 
-    result += definitionLines.join('\n');
+    result += definitionLines.join('\n').trimEnd() + '\n\n';
   }
 
-  result += '\n';
+  result = result.trimEnd() + '\n';
 
   await Bun.write('./dist/index.d.ts', result);
-
 }
 
 async function buildReadme() {
-  let result = await Bun.file('./readme-intro.md').text() + '\n';
+  let result = (await Bun.file('./readme-intro.md').text()).trimEnd() + '\n\n';
 
   const glob = new Glob('*.md');
   for (const filename of glob.scanSync('./doc')) {
     result += '### ' + parse(filename).name + '\n\n';
 
-    const content = await Bun.file(`./doc/${filename}`).text();
+    const content = (await Bun.file(`./doc/${filename}`).text()).trimEnd();
 
     let inDefinition = content.indexOf('```typescript') === 0;
 
     result += content.split('\n').map((line) => {
-      if (!inDefinition) {
-        return line;
-      }
+      if (inDefinition) {
+        if (line.indexOf('export declare function') === 0) {
+          return line.substring(7);
+        }
 
-      if (line === '```typescript') {
-        return line;
-      }
-
-      if (line === '```') {
-        inDefinition = false;
-        return line;
-      }
-
-      if (line.indexOf('export declare function') === 0) {
-        return line.substring(7);
+        if (line === '```') {
+          inDefinition = false;
+        }
       }
 
       return line;
-    }).join('\n');
+    }).join('\n').trimEnd() + '\n\n';
   }
+
+  result = result.trimEnd() + '\n';
 
   await Bun.write('./README.md', result);
   await Bun.write('./dist/README.md', result);
